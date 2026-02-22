@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://1yude8pbi567"]
+
+[ext_resource type="Script" uid="uid://dru8n2sqmox27" path="res://scenes/player/player.gd" id="1_8afob"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x7p2l"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8afob"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dovo2"]
+top_radius = 0.3
+bottom_radius = 0.1
+height = 1.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8afob"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Head:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D" unique_id=1481260826]
+collision_layer = 9
+script = ExtResource("1_8afob")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1773571156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_x7p2l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=71051477]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_8afob")
+
+[node name="Head" type="Node3D" parent="." unique_id=1970204577]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head" unique_id=2090035848]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.3937747, -0.3260837)
+mesh = SubResource("CylinderMesh_dovo2")
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=1720204085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=692060095]
+replication_config = SubResource("SceneReplicationConfig_8afob")
+
+[node name="Nameplate" type="Label3D" parent="." unique_id=1817156411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1830955, 0)
+billboard = 2
+text = "Peer ID"
+outline_size = 8
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=309302514]
+
+[node name="Menu" type="Control" parent="CanvasLayer" unique_id=1167485676]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Menu" unique_id=53845875]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Menu/PanelContainer" unique_id=334919152]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ButtonLeave" type="Button" parent="CanvasLayer/Menu/PanelContainer/MarginContainer" unique_id=1773903124]
+layout_mode = 2
+text = "Leave Game"

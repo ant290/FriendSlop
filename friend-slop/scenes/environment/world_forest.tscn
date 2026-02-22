@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bdvl2gj6icaet"]
+
+[ext_resource type="Script" uid="uid://bvebqunhcrsc7" path="res://scenes/environment/world_forest.gd" id="1_3pli8"]
+[ext_resource type="Texture2D" uid="uid://jhiilyftm0wm" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_08.png" id="1_b5dff"]
+[ext_resource type="PackedScene" uid="uid://bjgj8i84ufno3" path="res://scenes/environment/tree.tscn" id="2_3pli8"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_1o1l2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j6fc8"]
+albedo_texture = ExtResource("1_b5dff")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0wskc"]
+material = SubResource("StandardMaterial3D_j6fc8")
+size = Vector2(50, 50)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_b5dff"]
+
+[sub_resource type="Sky" id="Sky_3pli8"]
+sky_material = SubResource("ProceduralSkyMaterial_b5dff")
+
+[sub_resource type="Environment" id="Environment_1o1l2"]
+background_mode = 2
+sky = SubResource("Sky_3pli8")
+
+[node name="WorldForest" type="Node3D" unique_id=1824826905]
+script = ExtResource("1_3pli8")
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1359881139]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=1709543895]
+shape = SubResource("WorldBoundaryShape3D_1o1l2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1385070365]
+mesh = SubResource("PlaneMesh_0wskc")
+
+[node name="Tree" parent="." unique_id=578979518 instance=ExtResource("2_3pli8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="Tree2" parent="." unique_id=268148731 instance=ExtResource("2_3pli8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.297284, 2.5, -6.7550664)
+
+[node name="Tree3" parent="." unique_id=1645786589 instance=ExtResource("2_3pli8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.283363, 2.5, -7.357427)
+
+[node name="Tree4" parent="." unique_id=213664850 instance=ExtResource("2_3pli8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8574529, 2.5, 6.7498546)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=982978365]
+transform = Transform3D(0.6169947, 0, 0.78696734, 0, 1, 0, -0.78696734, 0, 0.6169947, 15.361526, 3.1655045, 15.7694025)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1324568686]
+environment = SubResource("Environment_1o1l2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=256576674]
+transform = Transform3D(1, 0, 0, 0, 0.86994284, 0.49315253, 0, -0.49315253, 0.86994284, 10.956691, 4.704047, 10.402673)
+shadow_enabled = true
+
+[node name="SpawnContainer" type="Node3D" parent="." unique_id=901163566]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=568762516]
+_spawnable_scenes = PackedStringArray("uid://chpi3evv0e4w8")
+spawn_path = NodePath("../SpawnContainer")
