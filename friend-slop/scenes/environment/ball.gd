@@ -12,5 +12,8 @@ func _process(delta: float) -> void:
 	pass
 
 func on_ball_hit(body: Node3D):
+	if not is_multiplayer_authority():
+		return
+		
 	if body.is_in_group("Players"):
 		call_deferred("queue_free")

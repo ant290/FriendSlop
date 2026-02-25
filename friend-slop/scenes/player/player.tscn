@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://1yude8pbi567"]
 
 [ext_resource type="Script" uid="uid://dru8n2sqmox27" path="res://scenes/player/player.gd" id="1_8afob"]
+[ext_resource type="Texture2D" uid="uid://pxj3b3e28fg3" path="res://addons/tube/inspector/icons/clipboard_icon.tres" id="2_dovo2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x7p2l"]
 
@@ -71,6 +72,24 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="ButtonLeave" type="Button" parent="CanvasLayer/Menu/PanelContainer/MarginContainer" unique_id=1773903124]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu/PanelContainer/MarginContainer" unique_id=895269937]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Menu/PanelContainer/MarginContainer/VBoxContainer" unique_id=977051343]
+layout_mode = 2
+
+[node name="LabelSession" type="Label" parent="CanvasLayer/Menu/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1218874992]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonCopySession" type="Button" parent="CanvasLayer/Menu/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=738120338]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+icon = ExtResource("2_dovo2")
+
+[node name="ButtonLeave" type="Button" parent="CanvasLayer/Menu/PanelContainer/MarginContainer/VBoxContainer" unique_id=1773903124]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Leave Game"

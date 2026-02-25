@@ -8,8 +8,11 @@ const JUMP_VELOCITY = 4.5
 @onready var head: Node3D = $Head
 @onready var nameplate: Label3D = $Nameplate
 @onready var menu: Control = $CanvasLayer/Menu
-@onready var button_leave: Button = $CanvasLayer/Menu/PanelContainer/MarginContainer/ButtonLeave
+@onready var label_session: Label = %LabelSession
+@onready var button_leave: Button = %ButtonLeave
+@onready var button_copy_session: Button = %ButtonCopySession
 
+var immobile := false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(int(name))
@@ -24,9 +27,12 @@ func _ready():
 		set_physics_process(false)
 		return
 	
+	label_session.text = Network.tube_client.session_id
 	camera_3d.current = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	button_leave.pressed.connect(func(): Network.leave_server())
+	button_copy_session.pressed.connect(func(): DisplayServer.clipboard_set(Network.tube_client.session_id))
+	DisplayServer.clipboard_set(Network.tube_client.session_id)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
@@ -38,12 +44,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("menu") and menu.visible == false:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		menu.show()
-	elif Input.is_action_just_pressed("menu") and menu.visible == true:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		menu.hide()
+	if Input.is_action_just_pressed("menu"):
+		open_menu(menu.visible)
+	
+	if immobile:
+		return
 	
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
@@ -61,6 +66,10 @@ func _physics_process(delta: float) -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if immobile:
+		direction = Vector3.ZERO
+	
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -70,8 +79,23 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+func open_menu(current_visibility: bool):
+	menu.visible = !current_visibility
+	immobile = menu.visible
+	
+	if menu.visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 func shoot():
-	var facing_dir = -head.transform.basis.z
 	var force = 100
 	var pos = global_position
-	Global.shoot_ball.rpc_id(1, pos, facing_dir, force)
+	var shoot_dir = get_shoot_direction()
+	Global.shoot_ball.rpc_id(1, pos, shoot_dir, force)
+
+func get_shoot_direction():
+	var viewport_rect = get_viewport().get_visible_rect().size
+	var raycast_start = camera_3d.project_ray_origin(viewport_rect / 2)
+	var raycast_end = raycast_start + camera_3d.project_ray_normal(viewport_rect / 2) * 200
+	return -(raycast_start - raycast_end).normalized()

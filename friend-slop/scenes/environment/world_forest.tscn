@@ -59,5 +59,10 @@ shadow_enabled = true
 [node name="SpawnContainer" type="Node3D" parent="." unique_id=901163566]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=568762516]
-_spawnable_scenes = PackedStringArray("uid://chpi3evv0e4w8")
+_spawnable_scenes = PackedStringArray("uid://chpi3evv0e4w8", "uid://cyrkbcrco03nq")
 spawn_path = NodePath("../SpawnContainer")
+
+[node name="TimerTarget" type="Timer" parent="." unique_id=2122231869]
+unique_name_in_owner = true
+wait_time = 5.0
+autostart = true
