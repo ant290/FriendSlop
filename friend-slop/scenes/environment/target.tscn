@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cyrkbcrco03nq"]
 
+[ext_resource type="Script" uid="uid://lidqucoidmy5" path="res://scenes/environment/target.gd" id="1_386so"]
 [ext_resource type="Texture2D" uid="uid://crhr7yueidpuy" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_08.png" id="1_dvk77"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_386so"]
@@ -16,9 +17,14 @@ size = Vector3(1, 2, 1)
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_dvk77"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
-properties/0/replication_mode = 1
+properties/0/replication_mode = 2
+properties/1/path = NodePath(".:health")
+properties/1/spawn = true
+properties/1/replication_mode = 2
 
 [node name="Target" type="StaticBody3D" unique_id=960821648]
+collision_layer = 9
+script = ExtResource("1_386so")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=81579505]
 shape = SubResource("BoxShape3D_386so")

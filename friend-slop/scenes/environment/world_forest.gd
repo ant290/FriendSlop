@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 	pass
 
 func spawn_target():
-	if is_multiplayer_authority() and spawn_container.get_child_count() < 10:
+	if is_multiplayer_authority() and get_tree().get_node_count_in_group('Targets') < 10:
 		var new_target = TARGET.instantiate()
 		
 		var rand_x = randf_range(-25, 25)

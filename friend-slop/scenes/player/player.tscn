@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dru8n2sqmox27" path="res://scenes/player/player.gd" id="1_8afob"]
 [ext_resource type="Texture2D" uid="uid://pxj3b3e28fg3" path="res://addons/tube/inspector/icons/clipboard_icon.tres" id="2_dovo2"]
+[ext_resource type="AudioStream" uid="uid://mjhvdb0hgx1q" path="res://assets/sounds/assets_sound_click.mp3" id="3_lvxji"]
+[ext_resource type="AudioStream" uid="uid://bdpm57f8n04rc" path="res://assets/sounds/assets_sound_ping.mp3" id="4_p47bc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x7p2l"]
 
@@ -19,6 +21,13 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("Head:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dovo2"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="Player" type="CharacterBody3D" unique_id=1481260826]
 collision_layer = 9
@@ -51,6 +60,7 @@ text = "Peer ID"
 outline_size = 8
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=309302514]
+unique_name_in_owner = true
 
 [node name="Menu" type="Control" parent="CanvasLayer" unique_id=1167485676]
 layout_mode = 3
@@ -93,3 +103,48 @@ icon = ExtResource("2_dovo2")
 unique_name_in_owner = true
 layout_mode = 2
 text = "Leave Game"
+
+[node name="Reticle" type="Panel" parent="CanvasLayer" unique_id=48157686]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(5, 5)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 2.5
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dovo2")
+
+[node name="HitMarker" type="Label" parent="CanvasLayer" unique_id=1903251357]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1)
+pivot_offset_ratio = Vector2(0.5, 0)
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="SoundHit" type="AudioStreamPlayer" parent="." unique_id=334861592]
+unique_name_in_owner = true
+stream = ExtResource("3_lvxji")
+
+[node name="SoundPing" type="AudioStreamPlayer" parent="." unique_id=448226666]
+unique_name_in_owner = true
+stream = ExtResource("4_p47bc")
